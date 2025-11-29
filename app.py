@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 import requests
+import os  # <-- for getting PORT from environment
 
 app = Flask(__name__)
 
@@ -50,5 +51,7 @@ def predict():
     except Exception as e:
         return f"Error: {e}"
 
+# ✅ Updated for Render deployment
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))  # default 5000 locally
+    app.run(host="0.0.0.0", port=port, debug=True)
